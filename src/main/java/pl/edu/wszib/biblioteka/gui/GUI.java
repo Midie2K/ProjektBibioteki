@@ -54,7 +54,7 @@ public class GUI {
 
     public static void listUsers(){
         UserBSK userBSK = UserBSK.getInstance();
-        System.out.println("Login\t | \tRole");
+        System.out.println("Id \t | \tLogin\t | \tName\t | \tSurname");
         userBSK.listUsers(UserBSK.getAllUsers());
         System.out.println("\n");
     }
@@ -95,6 +95,16 @@ public class GUI {
         user.setPasswd(DigestUtils.md5Hex(scanner.nextLine() + authenticator.seed));
         return user;
     }
+
+    public static User readNameAndSurname() {
+        User user = new User();
+        System.out.println("Name:");
+        user.setName(scanner.nextLine());
+        System.out.println("Surname:");
+        user.setSurname(scanner.nextLine());
+        return user;
+    }
+
     public static void showRegisterResult(boolean result) {
         if (result) {
             System.out.println("Registered successful\n");

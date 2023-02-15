@@ -24,12 +24,14 @@ public class UserBSK {
     public static boolean addUser(User user){
        if(!findUserByLogin(user)){
            try{
-               String sql = "INSERT INTO users(login, passwd, role) VALUES (?,?,?)";
+               String sql = "INSERT INTO users(login, passwd, role, name, surname) VALUES (?,?,?,?,?)";
 
                PreparedStatement statement = connection.prepareStatement(sql);
                statement.setString(1, user.getLogin());
                statement.setString(2, user.getPasswd());
                statement.setString(3,user.getRole().toString());
+               statement.setString(4, user.getName());
+               statement.setString(5, user.getSurname());
 
                statement.executeUpdate();
            } catch (SQLException e) {
@@ -68,7 +70,9 @@ public class UserBSK {
                         rs.getInt("id"),
                         rs.getString("login"),
                         rs.getString("passwd"),
-                        Role.valueOf(rs.getString("role"))
+                        Role.valueOf(rs.getString("role")),
+                        rs.getString("name"),
+                        rs.getString("surname")
                 ));
             }
         } catch (SQLException e) {
@@ -97,7 +101,9 @@ public class UserBSK {
                         rs.getInt("id"),
                         rs.getString("login"),
                         rs.getString("passwd"),
-                        Role.valueOf(rs.getString("role"))
+                        Role.valueOf(rs.getString("role")),
+                        rs.getString("name"),
+                        rs.getString("surname")
                 );
             } else
                 return result = null;

@@ -22,7 +22,8 @@ public class Core {
                 switch (gui.login()) {
                     case "1":
                         User user;
-                        user = gui.readLoginAndPasswd();
+                        user = User.connectLoginAndName(gui.readLoginAndPasswd(), gui.readNameAndSurname());
+                        System.out.println(user);
                         gui.showRegisterResult(userBSK.addUser(user));
                         break;
                     case "2":
