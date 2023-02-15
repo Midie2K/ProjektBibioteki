@@ -1,6 +1,6 @@
 package pl.edu.wszib.biblioteka.core;
 
-import pl.edu.wszib.biblioteka.data.UserDB;
+import pl.edu.wszib.biblioteka.bsk.UserBSK;
 import pl.edu.wszib.biblioteka.model.User;
 
 public class Authenticator {
@@ -10,8 +10,9 @@ public class Authenticator {
 
     private Authenticator(){}
     public void authenticate(User user) {
-        UserDB userDB = UserDB.getInstance();
-        User userFromDB = userDB.findByLogin(user.getLogin());
+        UserBSK userBSK = UserBSK.getInstance();
+        String login = user.getLogin();
+        User userFromDB = userBSK.getUserByLogin(login);
 
         if(userFromDB != null &&
                 userFromDB.getPasswd().equals(

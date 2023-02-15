@@ -1,18 +1,29 @@
 package pl.edu.wszib.biblioteka.model;
 
 public class User {
+    private int id;
     private String login;
     private String passwd;
     private Role role;
 
     public User() {
+        this.id = 0;
         this.role=Role.USER;
     }
 
-    public User(String login, String passwd, Role role) {
+    public User(int id, String login, String passwd, Role role) {
+        this.id =  id;
         this.login = login;
         this.passwd = passwd;
         this.role = role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {

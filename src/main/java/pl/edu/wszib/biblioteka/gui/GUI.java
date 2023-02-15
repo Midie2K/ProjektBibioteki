@@ -1,8 +1,8 @@
 package pl.edu.wszib.biblioteka.gui;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import pl.edu.wszib.biblioteka.bsk.UserBSK;
 import pl.edu.wszib.biblioteka.data.BookDB;
-import pl.edu.wszib.biblioteka.data.UserDB;
 import pl.edu.wszib.biblioteka.core.Authenticator;
 import pl.edu.wszib.biblioteka.model.Role;
 import pl.edu.wszib.biblioteka.model.User;
@@ -34,7 +34,6 @@ public class GUI {
                 authenticator.loggedUser.getRole().equals(Role.ADMIN)) {
             System.out.println("5. Add book");
             System.out.println("6. List users");
-            System.out.println("7. Grant user");
         }
         return scanner.nextLine();
     }
@@ -54,9 +53,9 @@ public class GUI {
     }
 
     public static void listUsers(){
-        UserDB userDB = UserDB.getInstance();
+        UserBSK userBSK = UserBSK.getInstance();
         System.out.println("Login\t | \tRole");
-        userDB.getUsers();
+        userBSK.listUsers(UserBSK.getAllUsers());
         System.out.println("\n");
     }
 
@@ -77,13 +76,6 @@ public class GUI {
         return scanner.nextLine();
     }
 
-    public static void showRentResult(boolean result) {
-        if (result) {
-            System.out.println("Book successful rented\n");
-        } else {
-            System.out.println("Book does not exist or is rented\n");
-        }
-    }
 
     public static void showAddResult(boolean result) {
         if (result) {

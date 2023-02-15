@@ -1,7 +1,7 @@
 package pl.edu.wszib.biblioteka.core;
 
+import pl.edu.wszib.biblioteka.bsk.UserBSK;
 import pl.edu.wszib.biblioteka.data.BookDB;
-import pl.edu.wszib.biblioteka.data.UserDB;
 import pl.edu.wszib.biblioteka.gui.GUI;
 import pl.edu.wszib.biblioteka.model.Role;
 import pl.edu.wszib.biblioteka.model.User;
@@ -9,7 +9,7 @@ import pl.edu.wszib.biblioteka.model.User;
 public class Core {
     public static void start(){
         final BookDB bookDB = BookDB.getInstance();
-        final UserDB userDB = UserDB.getInstance();
+        final UserBSK userBSK = UserBSK.getInstance();
         final Authenticator authenticator = Authenticator.getIstance();
         final GUI gui = GUI.getInstance();
         boolean isRunning = false;
@@ -22,15 +22,8 @@ public class Core {
                 switch (gui.login()) {
                     case "1":
                         User user;
-                        boolean registred = false;
-                        do{
-                            user=gui.readLoginAndPasswd();
-                            if(!userDB.ifUserExist(user.getLogin())){
-                                registred = true;
-                            }
-                            gui.showRegisterResult(registred);
-                        }while(!registred);
-                        userDB.register(user);
+                        user = gui.readLoginAndPasswd();
+                        gui.showRegisterResult(userBSK.addUser(user));
                         break;
                     case "2":
                         while (!isRunning && counter < 3) {
@@ -91,11 +84,7 @@ public class Core {
                             gui.listUsers();
                         }
                         break;
-                   // case "7":
-                   //     if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)){
-                   //         gui.showGrantResult(userDB.grantUser(gui.readUser()));
-                   //     }
-                  //      break;
+
                     default:
                         System.out.println("Wrong choose !!");
                         break;

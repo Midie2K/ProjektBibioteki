@@ -18,7 +18,7 @@ public class BookDB {
         books.add(new Book("Czarnobyl. Spowiedz reportera","Igor Kostin","26041986"));
         books.add(new Book("Opowiesci z Narnii","C.S. Lewis","97883727"));
         books.add(new Book("Listy z Auschwitz","Janusz Pogonowski","97883770"));
-        books.add(new Book("Chłopcy z Placu Broni","Ferenc Molnár","97883101"));
+        books.add(new Book("Chlopcy z Placu Broni","Ferenc Molnar","97883101"));
         books.add(new Book("Pan Tadeusz","Adam Mickiewicz","97883662"));
         books.add(new Book("Kamienie na szaniec","Aleksander Kaminski","97883101"));
         books.add(new Book("Wings of Fire ","Tui T. Sutherland","96847917"));
