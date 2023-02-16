@@ -1,8 +1,8 @@
 package pl.edu.wszib.biblioteka.gui;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import pl.edu.wszib.biblioteka.bsk.UserBSK;
-import pl.edu.wszib.biblioteka.data.BookDB;
+import pl.edu.wszib.biblioteka.dao.BookDAO;
+import pl.edu.wszib.biblioteka.dao.UserDAO;
 import pl.edu.wszib.biblioteka.core.Authenticator;
 import pl.edu.wszib.biblioteka.model.Role;
 import pl.edu.wszib.biblioteka.model.User;
@@ -41,25 +41,26 @@ public class GUI {
     public static String search(){
         System.out.println("1. Search by title");
         System.out.println("2. Search by author");
+        System.out.println("3. Search by ISBN");
 
         return scanner.nextLine();
     }
 
     public static void listBooks() {
-        BookDB bookDB = BookDB.getInstance();
-        System.out.println("Title\t | \tAuthor\t | \tISBN");
-        bookDB.getBooks();
+        BookDAO bookDAO = BookDAO.getInstance();
+        System.out.println("Id\t | \tTitle\t | \tAuthor\t | \tISBN\t | \tAvailable");
+        bookDAO.listBook(bookDAO.getAllBooks());
         System.out.println("\n");
     }
 
     public static void listUsers(){
-        UserBSK userBSK = UserBSK.getInstance();
+        UserDAO userDAO = UserDAO.getInstance();
         System.out.println("Id \t | \tLogin\t | \tName\t | \tSurname");
-        userBSK.listUsers(UserBSK.getAllUsers());
+        userDAO.listUsers(UserDAO.getAllUsers());
         System.out.println("\n");
     }
 
-    public static String readName() {
+    public static String readTitle() {
         System.out.println("Book title:");
         return scanner.nextLine();
     }
@@ -69,10 +70,6 @@ public class GUI {
     }
     public static String readIsbn() {
         System.out.println("Book isbn:");
-        return scanner.nextLine();
-    }
-    public static String readUser(){
-        System.out.println("User name:");
         return scanner.nextLine();
     }
 

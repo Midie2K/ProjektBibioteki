@@ -1,15 +1,16 @@
 package pl.edu.wszib.biblioteka.core;
 
-import pl.edu.wszib.biblioteka.bsk.UserBSK;
-import pl.edu.wszib.biblioteka.data.BookDB;
+import pl.edu.wszib.biblioteka.dao.BookDAO;
+import pl.edu.wszib.biblioteka.dao.UserDAO;
 import pl.edu.wszib.biblioteka.gui.GUI;
+import pl.edu.wszib.biblioteka.model.Book;
 import pl.edu.wszib.biblioteka.model.Role;
 import pl.edu.wszib.biblioteka.model.User;
 
 public class Core {
     public static void start(){
-        final BookDB bookDB = BookDB.getInstance();
-        final UserBSK userBSK = UserBSK.getInstance();
+        final BookDAO bookDAO = BookDAO.getInstance();
+        final UserDAO userDAO = UserDAO.getInstance();
         final Authenticator authenticator = Authenticator.getIstance();
         final GUI gui = GUI.getInstance();
         boolean isRunning = false;
@@ -23,8 +24,7 @@ public class Core {
                     case "1":
                         User user;
                         user = User.connectLoginAndName(gui.readLoginAndPasswd(), gui.readNameAndSurname());
-                        System.out.println(user);
-                        gui.showRegisterResult(userBSK.addUser(user));
+                        gui.showRegisterResult(userDAO.addUser(user));
                         break;
                     case "2":
                         while (!isRunning && counter < 3) {
@@ -54,10 +54,13 @@ public class Core {
                     case "2":
                         switch (gui.search()){
                             case "1":
-                                bookDB.getBooksByName(gui.readName());
+                                bookDAO.getBooksByTitle(gui.readTitle(),bookDAO.getAllBooks());
                                 break;
                             case "2":
-                                bookDB.getBooksByAuthor(gui.readAuthor());
+                                bookDAO.getBooksByAuthor(gui.readAuthor(),bookDAO.getAllBooks());
+                                break;
+                            case "3":
+                                bookDAO.getBooksByISBN(gui.readIsbn(),bookDAO.getAllBooks());
                                 break;
                             default:
                                 System.out.println("Wrong choose !!");
@@ -77,7 +80,11 @@ public class Core {
                         break;
                     case "5":
                         if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)) {
-                            gui.showAddResult(bookDB.addBook(gui.readName(), gui.readAuthor(), gui.readIsbn()));
+                            Book book = new Book();
+                            book.setTitle(gui.readTitle());
+                            book.setAuthor(gui.readAuthor());
+                            book.setIsbn(gui.readIsbn());
+                            gui.showAddResult(bookDAO.addBook(book));
                         }
                         break;
                     case "6":

@@ -1,12 +1,20 @@
-package pl.edu.wszib.biblioteka.bsk;
+package pl.edu.wszib.biblioteka.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class ConnectionBSK {
-    public static Connection connection;
+public class ConnectionDAO {
+    private static final ConnectionDAO instance = new ConnectionDAO();
+    private static Connection connection;
+
+    public static ConnectionDAO getInstance(){
+        return instance;
+    }
+    private ConnectionDAO(){
+    }
+
     public static void connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -18,6 +26,7 @@ public class ConnectionBSK {
             throw new RuntimeException(e);
         }
     }
+
     public static Connection getConnection(){
         connect();
         return connection;

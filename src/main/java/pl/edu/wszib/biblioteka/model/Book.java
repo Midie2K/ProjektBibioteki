@@ -1,24 +1,30 @@
 package pl.edu.wszib.biblioteka.model;
 
 public class Book {
-    String name;
+    int id;
+    String title;
     String author;
     String isbn; //8 znakow
     Boolean available;
 
-    public Book(String name, String author, String isbn) {
-        this.name = name;
-        this.author = author;
-        this.isbn = isbn;
+    public Book(){
+        this.id = 0;
         this.available = true;
     }
-
-    public String getName() {
-        return name;
+    public Book(int id, String name, String author, String isbn, boolean available) {
+        this.id = id;
+        this.title = name;
+        this.author = author;
+        this.isbn = isbn;
+        this.available = available;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String name) {
+        this.title = name;
     }
 
     public String getAuthor() {
@@ -48,11 +54,15 @@ public class Book {
     @Override
     public String toString() {
         return new StringBuilder()
-                .append(this.name)
+                .append(this.id)
+                .append("\t | \t")
+                .append(this.title)
                 .append("\t | \t")
                 .append(this.author)
                 .append("\t | \t")
                 .append(this.isbn)
+                .append("\t | \t")
+                .append(this.available)
                 .toString();
     }
 }

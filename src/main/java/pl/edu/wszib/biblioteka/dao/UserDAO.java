@@ -1,4 +1,4 @@
-package pl.edu.wszib.biblioteka.bsk;
+package pl.edu.wszib.biblioteka.dao;
 
 import pl.edu.wszib.biblioteka.model.Role;
 import pl.edu.wszib.biblioteka.model.User;
@@ -8,16 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class UserBSK {
+public class UserDAO {
     private static Connection connection;
-    private static final UserBSK instance = new UserBSK();
+    private static final UserDAO instance = new UserDAO();
+    private static final ConnectionDAO connectionDAO = ConnectionDAO.getInstance();
 
-    private UserBSK(){
-        this.connection = ConnectionBSK.getConnection();
+    private UserDAO(){
+        this.connection = connectionDAO.getConnection();
     }
-    public static UserBSK getInstance(){
+    public static UserDAO getInstance(){
         return instance;
     }
 
@@ -112,6 +112,5 @@ public class UserBSK {
             throw new RuntimeException(e);
         }
     }
-
 
 }
