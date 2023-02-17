@@ -78,10 +78,18 @@ public class BookDAO {
         return result;
     }
     public static void listBook(List<Book> list) {
-        System.out.println(list.stream().toList().
-                toString().replace("[","").
-                replace("]","").
-                replace(", ","\n"));
+        List<Book> books = list;
+        RentingDAO rentingDAO = RentingDAO.getInstance();
+        for(int i=0;i<books.size();i++){
+            System.out.print(books.get(i)
+                    .toString().replace("[","").
+                    replace("]","").
+                    replace(", ",""));
+            if(books.get(i).getAvailable() == false)
+                rentingDAO.getDatesFromRentingByBookId(books.get(i).getId());
+            else
+                System.out.println();
+        }
     }
 
         public void getBooksByTitle(String title,List<Book> books) {
@@ -91,7 +99,7 @@ public class BookDAO {
                     .toList().
                     toString().replace("[","").
                     replace("]","").
-                    replace(", ","\n"));;
+                    replace(", ","\n"));
         }
 
     public void getBooksByAuthor(String author,List<Book> books) {
@@ -101,7 +109,7 @@ public class BookDAO {
                 .toList().
                 toString().replace("[","").
                 replace("]","").
-                replace(", ","\n"));;
+                replace(", ","\n"));
     }
     public void getBooksByISBN(String isbn,List<Book> books) {
         System.out.println("Id\t | \tTitle\t | \tAuthor\t | \tISBN\t | \tAvailable");
@@ -110,8 +118,74 @@ public class BookDAO {
                 .toList().
                 toString().replace("[","").
                 replace("]","").
-                replace(", ","\n"));;
+                replace(", ","\n"));
+    }
+    public void changetoAvailable(int id){
+        String sql = "UPDATE books SET available = 1 WHERE id = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
+    public void changetoUnavailable(int id){
+        String sql = "UPDATE books SET available = 0 WHERE id = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Book getBookByid(String id) {
+        Book book = new Book();
+        try {
+            String sql = "SELECT * FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.valueOf(id));
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                book.setId(rs.getInt("id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setIsbn(rs.getString("isbn"));
+                book.setAvailable((rs.getInt("available"))==1?true:false);
+
+            } else book = null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return book;
+    }
+
+    public static Book getBookByid(int id) {
+        Book book = new Book();
+        try {
+            String sql = "SELECT * FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                book.setId(rs.getInt("id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setIsbn(rs.getString("isbn"));
+                book.setAvailable((rs.getInt("available"))==1?true:false);
+
+            } else book = null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return book;
+    }
 
 }

@@ -1,11 +1,11 @@
 package pl.edu.wszib.biblioteka.model;
 
 public class Book {
-    int id;
-    String title;
-    String author;
-    String isbn; //8 znakow
-    Boolean available;
+   private int id;
+    private String title;
+    private String author;
+    private String isbn;
+    private Boolean available;
 
     public Book(){
         this.id = 0;
@@ -51,6 +51,15 @@ public class Book {
         this.available = available;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id=id;
+    }
+
+
     @Override
     public String toString() {
         return new StringBuilder()
@@ -62,7 +71,7 @@ public class Book {
                 .append("\t | \t")
                 .append(this.isbn)
                 .append("\t | \t")
-                .append(this.available)
+                .append(this.available==true?"Yes":"No")
                 .toString();
     }
 }

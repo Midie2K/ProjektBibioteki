@@ -113,4 +113,56 @@ public class UserDAO {
         }
     }
 
+    public static User getUserByid(String id){
+        User result;
+        try{
+            String sql = "SELECT * FROM users WHERE id = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.valueOf(id));
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return result = new User(
+                        rs.getInt("id"),
+                        rs.getString("login"),
+                        rs.getString("passwd"),
+                        Role.valueOf(rs.getString("role")),
+                        rs.getString("name"),
+                        rs.getString("surname")
+                );
+            } else
+                return result = null;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static User getUserByid(int id){
+        User result;
+        try{
+            String sql = "SELECT * FROM users WHERE id = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return result = new User(
+                        rs.getInt("id"),
+                        rs.getString("login"),
+                        rs.getString("passwd"),
+                        Role.valueOf(rs.getString("role")),
+                        rs.getString("name"),
+                        rs.getString("surname")
+                );
+            } else
+                return result = null;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 }

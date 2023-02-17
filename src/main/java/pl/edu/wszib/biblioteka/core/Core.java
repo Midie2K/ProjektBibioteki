@@ -1,6 +1,7 @@
 package pl.edu.wszib.biblioteka.core;
 
 import pl.edu.wszib.biblioteka.dao.BookDAO;
+import pl.edu.wszib.biblioteka.dao.RentingDAO;
 import pl.edu.wszib.biblioteka.dao.UserDAO;
 import pl.edu.wszib.biblioteka.gui.GUI;
 import pl.edu.wszib.biblioteka.model.Book;
@@ -11,6 +12,7 @@ public class Core {
     public static void start(){
         final BookDAO bookDAO = BookDAO.getInstance();
         final UserDAO userDAO = UserDAO.getInstance();
+        final RentingDAO rentingDAO = RentingDAO.getInstance();
         final Authenticator authenticator = Authenticator.getIstance();
         final GUI gui = GUI.getInstance();
         boolean isRunning = false;
@@ -69,16 +71,24 @@ public class Core {
 
                         break;
                     case "3":
+                        gui.showRentResult(rentingDAO.rentBook(authenticator.loggedUser,bookDAO.getBookByid(gui.readBookId())));
+                        break;
+                    case "4":
+                        gui.listRentedByUser();
+                        rentingDAO.listRentedByUser(authenticator.loggedUser,rentingDAO.allRentedBooks());
+                        gui.showReturnResult(rentingDAO.returnBook(gui.readRentId(), authenticator.loggedUser));
+                        break;
+                    case "5":
                         isRunning = false;
                         isLoged = false;
                         counter = 0;
                         authenticator.loggedUser = null;
                         break;
-                    case "4":
+                    case "6":
                         isRunning = false;
                         Exit = true;
                         break;
-                    case "5":
+                    case "7":
                         if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)) {
                             Book book = new Book();
                             book.setTitle(gui.readTitle());
@@ -87,9 +97,19 @@ public class Core {
                             gui.showAddResult(bookDAO.addBook(book));
                         }
                         break;
-                    case "6":
+                    case "8":
                         if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)){
                             gui.listUsers();
+                        }
+                        break;
+                    case "9":
+                        if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)){
+                            gui.listRentedBooks();
+                        }
+                        break;
+                    case "0":
+                        if (authenticator.loggedUser != null && authenticator.loggedUser.getRole().equals(Role.ADMIN)){
+                            gui.listExceededBooks();
                         }
                         break;
 
