@@ -1,0 +1,12 @@
+pl\edu\wszib\biblioteka\model\Role.class
+pl\edu\wszib\biblioteka\gui\GUI.class
+pl\edu\wszib\biblioteka\model\Book.class
+pl\edu\wszib\biblioteka\App.class
+pl\edu\wszib\biblioteka\core\Authenticator.class
+pl\edu\wszib\biblioteka\dao\RentingDAO.class
+pl\edu\wszib\biblioteka\dao\UserDAO.class
+pl\edu\wszib\biblioteka\model\User.class
+pl\edu\wszib\biblioteka\dao\BookDAO.class
+pl\edu\wszib\biblioteka\model\Renting.class
+pl\edu\wszib\biblioteka\core\Core.class
+pl\edu\wszib\biblioteka\dao\ConnectionDAO.class
